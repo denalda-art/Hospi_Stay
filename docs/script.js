@@ -5,27 +5,23 @@ window.onload = function () {
         return;
     }
 
-    document.getElementById("predict-btn").addEventListener("click", async function (event) {
-        event.preventDefault();
-
-        let age = document.getElementById("age").value;
-        let department = document.getElementById("department").value;
-        let rooms = document.getElementById("rooms").value;
+    document.getElementById("predict-btn").addEventListener("click", async function () {
+        let age_0_10 = document.getElementById("age_0_10").value;
+        let department_anesthesia = document.getElementById("department_anesthesia").value;
+        let available_extra_rooms = document.getElementById("available_extra_rooms").value;
 
         let payload = {
-            age_0_10: Number(age),
-            department_anesthesia: Number(department),
-            available_extra_rooms: Number(rooms)
+            age_0_10: Number(age_0_10),
+            department_anesthesia: Number(department_anesthesia),
+            available_extra_rooms: Number(available_extra_rooms)
         };
 
-        console.log("📤 Sending to FastAPI:", payload);
+        console.log("📤 Sending to API:", payload);
 
         try {
-            let response = await fetch("https://hospistay-production.up.railway.app/docs/", { // Ensure FastAPI URL
+            let response = await fetch("https://hospistay-production.up.railway.app/predict/", { 
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             });
 
@@ -37,7 +33,6 @@ window.onload = function () {
 
             let jsonResponse = await response.json();
             console.log("✅ JSON Response:", jsonResponse);
-
             document.getElementById("prediction-result").innerText = "Predicted Value: " + jsonResponse.prediction;
         } catch (error) {
             console.error("❌ Error:", error.message);
