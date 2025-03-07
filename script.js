@@ -21,7 +21,7 @@ window.onload = function () {
         console.log("📤 Sending to FastAPI:", payload);
 
         try {
-            let response = await fetch("https://hospistay-production.up.railway.app/docs/", { // Ensure FastAPI URL
+            let response = await fetch("https://hospistay-production.up.railway.app/predict/", { // Ensure FastAPI URL
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
